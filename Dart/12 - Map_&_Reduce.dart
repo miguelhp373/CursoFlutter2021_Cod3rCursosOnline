@@ -1,3 +1,5 @@
+import 'dart:core';
+
 main() {
   var alunos = [
     {'nome': 'Alfredo', 'nota': 9.9},
@@ -14,9 +16,12 @@ main() {
   int Function(String) getTextLenght = (texto) => texto.length;
 
   var nomes = alunos.map(getOnlyName);
-  var textLength = alunos.map(getTextLenght);
+  var textLength = nomes.map(getTextLenght);
   print(nomes);
   print(textLength);
+
+  // (Alfredo, Wilson, Guilherme, Ana, Ricardo, Mariana)
+  // (7, 6, 9, 3, 7, 7)
 
   ////////////////
 }
