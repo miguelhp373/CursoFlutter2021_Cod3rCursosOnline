@@ -1,0 +1,25 @@
+---------------------------------
+    Desafio - Classe Carro
+---------------------------------
+
+* Crie um arquivo da classe carro
+    
+    * Onde o objetivo dela será receber a velocidade maxima.
+    
+    * Esta classe terá os seguinte atributos:
+         final int velocidadeMaxima
+         int velocidadeAtual
+
+    * Crie um construtor para receber a velocidade maxima
+    
+    * E também terá os seguintes metodos:
+        int acelerar(){} //5++
+        int frear(){}//5--
+        bool estaNoLimite(){}//retorna se a velocidadeMaxima = velocidadeAtual senao retorna false
+
+
+* Crie um arquivo main, para importar a classe carro
+
+
+* dicas: 
+    * utilizar uma estrutura de repetição para 'acelerar' e 'frear'.
