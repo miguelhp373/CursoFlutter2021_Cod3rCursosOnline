@@ -1,0 +1,4 @@
+//exercicio para pratica de classes, utilizando get & setters
+//criar um sistema bancario, onde o usuário inicia com saldo 0, e pode depositar valores
+//maiores que 0, e sacar tambem valores maiores que 0.
+class Bank {}
