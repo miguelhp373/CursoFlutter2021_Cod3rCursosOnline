@@ -40,8 +40,10 @@ class Bank {
   void withDraw(double value) {
     _balance = setBalance;
 
-    if (_balance != null) {
+    if (_balance != null && _balance! > 0 && _balance! >= valueParam!) {
       _balance = (_balance! - valueParam!);
+    } else {
+      throw ('low balance');
     }
   }
 }

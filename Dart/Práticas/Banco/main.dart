@@ -42,6 +42,11 @@ main() {
       bankOperation.withDraw(setOperationValue);
     }
 
+    if (operationDefine == 'exit') {
+      print('Thanks!');
+      break;
+    }
+
     print('');
     print(
         "---------------------------------------------------------------------");
