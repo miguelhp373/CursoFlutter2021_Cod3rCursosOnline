@@ -1,0 +1,9 @@
+flutter clean     (clean project)
+flutter pub get   (dependencies download)
+flutter run       (run application)
+flutter doctor    (verify components)
+flutter version   (check version)
+flutter build     (build project)
+flutter upgrade   (upgrade download)
+flutter emulators (list emulators)
+	
