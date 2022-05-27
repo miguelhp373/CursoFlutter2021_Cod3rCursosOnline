@@ -4,10 +4,25 @@ main() {
   runApp(const PerguntasApp());
 }
 
-class PerguntasApp extends StatelessWidget {
+class PerguntasApp extends StatefulWidget {
   const PerguntasApp({Key? key}) : super(key: key);
 
-  void aswnerQuestion() {}
+  @override
+  State<PerguntasApp> createState() => _PerguntasAppState();
+}
+
+class _PerguntasAppState extends State<PerguntasApp> {
+  int questionSelected = 0;
+
+  void aswnerSelect() {
+    setState(() {
+      if (questionSelected < 1) {
+        questionSelected = 1;
+      } else {
+        questionSelected = 0;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +42,12 @@ class PerguntasApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Perguntas'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Perguntas'),
+            ],
+          ),
         ),
         body: Container(
           margin: EdgeInsets.all(fixValueForMarginsTop),
@@ -37,20 +57,20 @@ class PerguntasApp extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(questions[0]),
+                  Text(questions[questionSelected]),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: () => {aswnerQuestion()},
+                    onPressed: aswnerSelect,
                     child: Text(questionsAswer[0]),
                   ),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: aswnerSelect,
                     child: Text(questionsAswer[1]),
                   ),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: aswnerSelect,
                     child: Text(questionsAswer[2]),
                   ),
                 ],
