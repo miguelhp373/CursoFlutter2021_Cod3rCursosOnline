@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perguntas/components/question_text.dart';
 
 main() {
   runApp(const PerguntasApp());
@@ -14,7 +15,7 @@ class PerguntasApp extends StatefulWidget {
 class _PerguntasAppState extends State<PerguntasApp> {
   int questionSelected = 0;
 
-  void aswnerSelect() {
+  void _aswnerSelect() {
     setState(() {
       if (questionSelected < 1) {
         questionSelected = 1;
@@ -34,9 +35,12 @@ class _PerguntasAppState extends State<PerguntasApp> {
     ];
 
     final List<String> questionsAswer = [
-      'xxxxxxxxxxx',
-      'xxxxxxxxxxx',
-      'xxxxxxxxxxx',
+      'Azul',
+      'Preto',
+      'Vermelho',
+      'Cachorro',
+      'Gato',
+      'Passáro'
     ];
 
     return MaterialApp(
@@ -58,21 +62,33 @@ class _PerguntasAppState extends State<PerguntasApp> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(questions[questionSelected]),
+                  QuestionText(questions[questionSelected]),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: aswnerSelect,
-                    child: Text(questionsAswer[0]),
+                    onPressed: _aswnerSelect,
+                    child: Text(
+                      questionSelected == 0
+                          ? questionsAswer[0]
+                          : questionsAswer[3],
+                    ),
                   ),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: aswnerSelect,
-                    child: Text(questionsAswer[1]),
+                    onPressed: _aswnerSelect,
+                    child: Text(
+                      questionSelected == 0
+                          ? questionsAswer[1]
+                          : questionsAswer[4],
+                    ),
                   ),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
-                    onPressed: aswnerSelect,
-                    child: Text(questionsAswer[2]),
+                    onPressed: _aswnerSelect,
+                    child: Text(
+                      questionSelected == 0
+                          ? questionsAswer[2]
+                          : questionsAswer[5],
+                    ),
                   ),
                 ],
               )
