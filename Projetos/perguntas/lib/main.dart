@@ -13,14 +13,14 @@ class PerguntasApp extends StatefulWidget {
 }
 
 class _PerguntasAppState extends State<PerguntasApp> {
-  int questionSelected = 0;
+  int _questionSelected = 0;
 
   void _aswnerSelect() {
     setState(() {
-      if (questionSelected < 1) {
-        questionSelected = 1;
+      if (_questionSelected < 1) {
+        _questionSelected = 1;
       } else {
-        questionSelected = 0;
+        _questionSelected = 0;
       }
     });
   }
@@ -62,12 +62,12 @@ class _PerguntasAppState extends State<PerguntasApp> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  QuestionText(questions[questionSelected]),
+                  QuestionText(questions[_questionSelected]),
                   SizedBox(height: fixValueForMarginsTop),
                   ElevatedButton(
                     onPressed: _aswnerSelect,
                     child: Text(
-                      questionSelected == 0
+                      _questionSelected == 0
                           ? questionsAswer[0]
                           : questionsAswer[3],
                     ),
@@ -76,7 +76,7 @@ class _PerguntasAppState extends State<PerguntasApp> {
                   ElevatedButton(
                     onPressed: _aswnerSelect,
                     child: Text(
-                      questionSelected == 0
+                      _questionSelected == 0
                           ? questionsAswer[1]
                           : questionsAswer[4],
                     ),
@@ -85,7 +85,7 @@ class _PerguntasAppState extends State<PerguntasApp> {
                   ElevatedButton(
                     onPressed: _aswnerSelect,
                     child: Text(
-                      questionSelected == 0
+                      _questionSelected == 0
                           ? questionsAswer[2]
                           : questionsAswer[5],
                     ),
