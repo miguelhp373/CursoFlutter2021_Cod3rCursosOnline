@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class AswnerButton extends StatelessWidget {
   final String textDisplayOnButton;
   final void Function() onSelect;
-  final ButtonStyle? style;
+  final ButtonStyle? defineStyleOnButton;
 
-  const AswnerButton(this.textDisplayOnButton, this.onSelect, this.style,
+  const AswnerButton(
+      this.textDisplayOnButton, this.onSelect, this.defineStyleOnButton,
       {Key? key})
       : super(key: key);
 
@@ -14,8 +15,8 @@ class AswnerButton extends StatelessWidget {
     return SizedBox(
       width: 200,
       child: ElevatedButton(
-        style: style,
-        onPressed: onSelect, //_aswnerSelect,
+        style: defineStyleOnButton,
+        onPressed: onSelect,
         child: Text(textDisplayOnButton),
       ),
     );
