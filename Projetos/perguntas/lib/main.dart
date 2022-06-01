@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perguntas/components/aswner_button.dart';
 import 'package:perguntas/components/question_text.dart';
 
 main() {
@@ -27,7 +28,9 @@ class _PerguntasAppState extends State<PerguntasApp> {
 
   @override
   Widget build(BuildContext context) {
+    //default const values on application
     double fixValueForMarginsTop = 10;
+    const Color colorPrimaryButton = Colors.blueAccent;
 
     final List<String> questions = [
       'Qual sua Cor Favorita?',
@@ -64,32 +67,26 @@ class _PerguntasAppState extends State<PerguntasApp> {
                 children: [
                   QuestionText(questions[_questionSelected]),
                   SizedBox(height: fixValueForMarginsTop),
-                  ElevatedButton(
-                    onPressed: _aswnerSelect,
-                    child: Text(
+                  AswnerButton(
                       _questionSelected == 0
                           ? questionsAswer[0]
                           : questionsAswer[3],
-                    ),
-                  ),
+                      _aswnerSelect,
+                      ElevatedButton.styleFrom(primary: colorPrimaryButton)),
                   SizedBox(height: fixValueForMarginsTop),
-                  ElevatedButton(
-                    onPressed: _aswnerSelect,
-                    child: Text(
+                  AswnerButton(
                       _questionSelected == 0
                           ? questionsAswer[1]
                           : questionsAswer[4],
-                    ),
-                  ),
+                      _aswnerSelect,
+                      ElevatedButton.styleFrom(primary: colorPrimaryButton)),
                   SizedBox(height: fixValueForMarginsTop),
-                  ElevatedButton(
-                    onPressed: _aswnerSelect,
-                    child: Text(
+                  AswnerButton(
                       _questionSelected == 0
                           ? questionsAswer[2]
                           : questionsAswer[5],
-                    ),
-                  ),
+                      _aswnerSelect,
+                      ElevatedButton.styleFrom(primary: colorPrimaryButton))
                 ],
               )
             ],
