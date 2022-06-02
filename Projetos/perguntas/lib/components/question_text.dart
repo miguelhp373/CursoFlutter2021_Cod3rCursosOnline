@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 class QuestionText extends StatelessWidget {
   final String textQuestionDisplay;
-  const QuestionText(this.textQuestionDisplay, {Key? key}) : super(key: key);
+  final Color textColorDefine;
+  const QuestionText(this.textQuestionDisplay, this.textColorDefine, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       textQuestionDisplay,
-      style: const TextStyle(fontSize: 18),
+      style: TextStyle(
+        fontSize: 18,
+        color: textColorDefine,
+      ),
     );
   }
 }

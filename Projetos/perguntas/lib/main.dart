@@ -30,21 +30,23 @@ class _PerguntasAppState extends State<PerguntasApp> {
   Widget build(BuildContext context) {
     //default const values on application
     double fixValueForMarginsTop = 10;
-    const Color colorPrimaryButton = Colors.blueAccent;
-
-    final List<String> questions = [
-      'Qual sua Cor Favorita?',
-      'Qual seu Animal Favorito?',
+    //colors define
+    const Color colorPrimaryText = Colors.white;
+    const Color colorSecondaryButton = Colors.grey;
+    const Color colorContainerCard = Colors.lightBlue;
+    //List<type<datatype, key>>
+    final List<Map<String, Object>> questions = [
+      {
+        'question': 'Qual sua Cor Favorita?',
+        'aswner': ['Azul', 'Preto', 'Vermelho', 'Preto']
+      },
+      {
+        'question': 'Qual seu Animal Favorito?',
+        'aswner': ['Cachorro', 'Gato', 'Passáro', 'Coelho']
+      }
     ];
 
-    final List<String> questionsAswer = [
-      'Azul',
-      'Preto',
-      'Vermelho',
-      'Cachorro',
-      'Gato',
-      'Passáro'
-    ];
+    List<String> awsnerList = questions[_questionSelected].cast()['aswner'];
 
     return MaterialApp(
       home: Scaffold(
@@ -57,40 +59,62 @@ class _PerguntasAppState extends State<PerguntasApp> {
             ],
           ),
         ),
-        body: Container(
-          margin: EdgeInsets.all(fixValueForMarginsTop),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  QuestionText(questions[_questionSelected]),
-                  SizedBox(height: fixValueForMarginsTop),
-                  AswnerButton(
-                      _questionSelected == 0
-                          ? questionsAswer[0]
-                          : questionsAswer[3],
-                      _aswnerSelect,
-                      ElevatedButton.styleFrom(primary: colorPrimaryButton)),
-                  SizedBox(height: fixValueForMarginsTop),
-                  AswnerButton(
-                      _questionSelected == 0
-                          ? questionsAswer[1]
-                          : questionsAswer[4],
-                      _aswnerSelect,
-                      ElevatedButton.styleFrom(primary: colorPrimaryButton)),
-                  SizedBox(height: fixValueForMarginsTop),
-                  AswnerButton(
-                      _questionSelected == 0
-                          ? questionsAswer[2]
-                          : questionsAswer[5],
-                      _aswnerSelect,
-                      ElevatedButton.styleFrom(primary: colorPrimaryButton))
-                ],
-              )
-            ],
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 250,
+                  height: 300,
+                  margin: EdgeInsets.all(fixValueForMarginsTop),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: colorContainerCard,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          QuestionText(
+                            questions[_questionSelected]['question'].toString(),
+                            colorPrimaryText,
+                          ),
+                          SizedBox(height: fixValueForMarginsTop),
+                          ...awsnerList
+                              .map(
+                                (displayTextonButton) => AswnerButton(
+                                  displayTextonButton,
+                                  _aswnerSelect,
+                                  ElevatedButton.styleFrom(
+                                    primary: colorSecondaryButton,
+                                    textStyle: const TextStyle(
+                                        color: colorPrimaryText),
+                                  ),
+                                  fixValueForMarginsTop,
+                                ),
+                              )
+                              .toList(), //spread
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
