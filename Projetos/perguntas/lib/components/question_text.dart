@@ -8,12 +8,22 @@ class QuestionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      textQuestionDisplay,
-      style: TextStyle(
-        fontSize: 18,
-        color: textColorDefine,
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Text(
+            textQuestionDisplay,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 10,
+            style: TextStyle(
+              fontSize: 18,
+              color: textColorDefine,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

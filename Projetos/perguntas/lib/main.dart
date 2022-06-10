@@ -104,6 +104,18 @@ class _PerguntasAppState extends State<PerguntasApp> {
                 aswnerAction: _aswnerSelect,
               )
             : ResultView(points: _finalpontuation),
+        bottomSheet: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Text(
+                "By ©Cod3r / ©Miguelh",
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
