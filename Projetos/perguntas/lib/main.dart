@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:perguntas/views/aswners_layout.dart';
+import 'package:perguntas/components/question_layout.dart';
+import 'package:perguntas/global/app_definitions.dart';
+import 'package:perguntas/views/result_layout.dart';
 
 main() {
   runApp(const PerguntasApp());
@@ -13,24 +15,51 @@ class PerguntasApp extends StatefulWidget {
 }
 
 class _PerguntasAppState extends State<PerguntasApp> {
+  //inicialized variable
   int _questionSelected = 0;
+  int _finalpontuation = 0;
 
   //List<type<datatype, key>>
-  final List<Map<String, Object>> _questions = [
+  final _questions = const [
     {
-      'question': 'Qual sua Cor Favorita?',
-      'aswner': ['Azul', 'Preto', 'Vermelho', 'Preto']
+      'question': 'De onde é a invenção do chuveiro elétrico?',
+      'aswner': [
+        {'text': 'França', 'points': 0},
+        {'text': 'Inglaterra', 'points': 0},
+        {'text': 'Brasil', 'points': 10},
+        {'text': 'Austrália', 'points': 0},
+      ],
+      'correct': 'Brasil'
     },
     {
-      'question': 'Qual seu Animal Favorito?',
-      'aswner': ['Cachorro', 'Gato', 'Passáro', 'Coelho']
-    }
+      'question': 'Quais o menor e o maior país do mundo?',
+      'aswner': [
+        {'text': 'Vaticano e Rússia', 'points': 10},
+        {'text': 'Nauru e China', 'points': 0},
+        {'text': 'Malta e Estados Unidos', 'points': 0},
+        {'text': 'São Marino e Índia', 'points': 0},
+      ],
+      'correct': 'Vaticano e Rússia'
+    },
+    {
+      'question': 'Em que período da pré-história o fogo foi descoberto?',
+      'aswner': [
+        {'text': 'Neolítico', 'points': 0},
+        {'text': 'Paleolítico', 'points': 10},
+        {'text': 'Período da Pedra Polida', 'points': 0},
+        {'text': 'Idade dos Metais', 'points': 0},
+      ],
+      'correct': 'Paleolítico'
+    },
   ];
 
-  void _aswnerSelect() {
-    setState(() {
-      _questionSelected++;
-    });
+  void _aswnerSelect(int pontuation) {
+    if (selectedQuestion) {
+      setState(() {
+        _questionSelected++;
+        _finalpontuation += pontuation;
+      });
+    }
   }
 
   bool get selectedQuestion {
@@ -40,23 +69,41 @@ class _PerguntasAppState extends State<PerguntasApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: AppDefinitions.appBarPrimaryColor,
+      ),
       home: Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [const Text('Perguntas')],
-          ),
+          backgroundColor: AppDefinitions.appBarPrimaryColor,
+          title: const Text('Jogo de Perguntas Gerais'),
+          centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: selectedQuestion
+                    ? null
+                    : () => {
+                          setState(() {
+                            _questionSelected = 0;
+                          })
+                        },
+                icon: const Icon(
+                  Icons.autorenew,
+                  size: 26.0,
+                ),
+              ),
+            )
+          ],
         ),
         body: selectedQuestion
-            ? AswnersLayout(
-                aswnerParam: _aswnerSelect,
-                questionsParam: _questions,
-                selectQuestionParam: _questionSelected,
+            ? QuestionLayout(
+                questionsList: _questions,
+                selectedQuestionParam: _questionSelected,
+                aswnerAction: _aswnerSelect,
               )
-            : const Center(
-                child: Text('Parabéns!'),
-              ),
+            : ResultView(points: _finalpontuation),
       ),
     );
   }
