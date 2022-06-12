@@ -87,6 +87,7 @@ class _PerguntasAppState extends State<PerguntasApp> {
                     : () => {
                           setState(() {
                             _questionSelected = 0;
+                            _finalpontuation = 0;
                           })
                         },
                 icon: const Icon(
