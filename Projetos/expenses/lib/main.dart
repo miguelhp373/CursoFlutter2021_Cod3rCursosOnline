@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import 'models/transaction.dart';
 
 main() => runApp(ExpensesApp());
@@ -40,44 +40,75 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
         title: const Text('Despesas Pessoais'),
       ),
-      body: Column(children: [
-        Container(
-          width: double.infinity,
-          child: Card(
-            color: Colors.blue,
-            child: Text('Gráfico'),
-            elevation: 5,
-          ),
-        ),
-        Column(
-          children: _transactions.map((id) {
-            return Card(
-              child: Row(children: [
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: double.infinity,
+              child: const Card(
+                color: Colors.blue,
+                child: Text('Gráfico'),
+                elevation: 5,
+              ),
+            ),
+            Column(
+              children: _transactions.map((id) {
+                return Card(
+                  child: Row(children: [
+                    Container(
+                      width: 100,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        id.value.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
+                      ),
                     ),
-                  ),
-                  padding: EdgeInsets.all(10),
-                  child: Text(id.value.toString()),
-                ),
-                Column(
-                  children: [
-                    Text(id.title),
-                    Text(id.date.toString()),
-                  ],
-                )
-              ]),
-            );
-          }).toList(),
-        ),
-      ]),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            id.title,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            DateFormat('d MMM y').format(id.date),
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                );
+              }).toList(),
+            ),
+          ]),
     );
   }
 }
