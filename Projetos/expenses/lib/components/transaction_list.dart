@@ -12,66 +12,75 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: sized_box_for_whitespace
     return Container(
-      height: MediaQuery.of(context).size.height,
-      //renderiza os componentes de forma dinamica, conforme a demanda
-      child: ListView.builder(
-        itemCount: transactions.length,
-        itemBuilder: (ctx, index) {
-          final id = transactions[index];
-          return Card(
-            child: Row(children: [
-              Container(
-                width: 100,
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  id.value.toString(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.purple,
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                ),
+        height: MediaQuery.of(context).size.height,
+        //renderiza os componentes de forma dinamica, conforme a demanda
+        child: transactions.isEmpty
+            ? Center(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      id.title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('d MMM y').format(id.date),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/waiting.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  const Text('Nenhuma Transação Cadastrada!',
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              ))
+            : ListView.builder(
+                itemCount: transactions.length,
+                itemBuilder: (ctx, index) {
+                  final id = transactions[index];
+                  return Card(
+                    child: Row(children: [
+                      Container(
+                        width: 100,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.primary,
+                            width: 2,
+                          ),
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          id.value.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ]),
-          );
-        },
-      ),
-    );
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              id.title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              DateFormat('d MMM y').format(id.date),
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ]),
+                  );
+                },
+              ));
   }
 }

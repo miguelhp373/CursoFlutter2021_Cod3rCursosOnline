@@ -1,22 +1,48 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
   TransactionForm({Key? key, required this.onSubmit}) : super(key: key);
 
+  final void Function(String, double) onSubmit;
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
+
   final valueController = TextEditingController();
 
-  final void Function(String, double) onSubmit;
+  _alertError(_) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text('Operação Cancelada!'),
+              content: const Text('Titulo Vazio, ou Valor R\$ Menor que 0.'),
+              actions: <Widget>[
+                // TextButton(
+                //   onPressed: () => Navigator.pop(context, 'Cancel'),
+                //   child: Text('Cancel'),
+                // ),
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'OK'),
+                  child: const Text('OK'),
+                ),
+              ],
+            ));
+  }
 
   _onSubmit() {
     final titleParamReturn = titleController.text;
     final valueParamReturn = double.tryParse(valueController.text) ?? 0.00;
 
     if (titleParamReturn.isEmpty || valueParamReturn <= 0) {
+      _alertError(context); //msg de erro
       return;
     }
 
-    onSubmit(titleParamReturn, valueParamReturn);
+    widget.onSubmit(titleParamReturn, valueParamReturn);
   }
 
   @override
