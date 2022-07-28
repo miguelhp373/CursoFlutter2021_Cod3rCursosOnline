@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expenses/models/transaction.dart';
 
+enum Menu { itemOne, itemTwo, itemThree, itemFour } //pop menu
+
 class TransactionList extends StatelessWidget {
-  const TransactionList({Key? key, required this.transactions})
-      : super(key: key);
+  TransactionList({Key? key, required this.transactions}) : super(key: key);
 
   final List<Transaction> transactions;
+
+  String _popmenuSelectedOption = '';
 
   @override
   Widget build(BuildContext context) {
@@ -33,52 +36,41 @@ class TransactionList extends StatelessWidget {
             : ListView.builder(
                 itemCount: transactions.length,
                 itemBuilder: (ctx, index) {
-                  final id = transactions[index];
+                  final tr = transactions[index];
                   return Card(
-                    child: Row(children: [
-                      Container(
-                        width: 100,
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 2,
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 5,
+                    ),
+                    child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FittedBox(
+                              child: Text('R\$ ${tr.value}'),
+                            ),
                           ),
                         ),
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          id.value.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
+                        title: Text(
+                          tr.title,
+                          style: Theme.of(context).textTheme.titleSmall,
                         ),
-                      ),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              id.title,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              DateFormat('d MMM y').format(id.date),
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ]),
+                        subtitle: Text(DateFormat('d MMM y').format(tr.date)),
+                        trailing: PopupMenuButton<Menu>(
+                            // Callback that sets the selected popup menu item.
+                            onSelected: (Menu item) {
+                              _popmenuSelectedOption = item.name;
+                            },
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<Menu>>[
+                                  PopupMenuItem<Menu>(
+                                    value: Menu.itemOne,
+                                    child: Text('Excluir'),
+                                    //key: int.parse(tr.id),
+                                  ),
+                                ])),
                   );
                 },
               ));
