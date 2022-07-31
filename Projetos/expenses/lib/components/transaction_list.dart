@@ -15,7 +15,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: sized_box_for_whitespace
     return Container(
-        height: MediaQuery.of(context).size.height,
+        height: 400,
         //renderiza os componentes de forma dinamica, conforme a demanda
         child: transactions.isEmpty
             ? Center(
