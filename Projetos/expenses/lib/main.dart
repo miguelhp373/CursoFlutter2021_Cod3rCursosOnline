@@ -1,5 +1,6 @@
 import 'package:expenses/components/chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:math';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
@@ -21,6 +22,11 @@ class ExpensesApp extends StatelessWidget {
             .copyWith(secondary: Colors.amber),
         fontFamily: 'OpenSans',
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('pt', 'BR')],
     );
   }
 }
@@ -45,7 +51,37 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Ifood',
       value: 59.82,
       date: DateTime.now().subtract(Duration(days: 3)),
-    )
+    ),
+    Transaction(
+      id: '4565432',
+      title: 'Ifood',
+      value: 59.82,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: '25445',
+      title: 'Ifood',
+      value: 59.82,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: '2342342',
+      title: 'Ifood',
+      value: 59.82,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: '21212',
+      title: 'Ifood',
+      value: 59.82,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: '123122',
+      title: 'Ifood',
+      value: 59.82,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -55,12 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
-  _addTransaction(String titleParam, double valueParam) {
+  _addTransaction(
+      String titleParam, double valueParam, DateTime datetimeParam) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: titleParam,
         value: valueParam,
-        date: DateTime.now());
+        date: datetimeParam);
 
     setState(() {
       try {
@@ -69,6 +106,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop(); //fecha o modal
+  }
+
+  _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((transactionId) => transactionId.id == id);
+    });
   }
 
   _openTransactionFormModal(BuildContext context) {
@@ -97,7 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(recentsTransactions: _recentTransactions),
-            TransactionList(transactions: _transactions),
+            TransactionList(
+              transactions: _transactions,
+              onRemove: _deleteTransaction,
+            ),
           ],
         ),
       ),

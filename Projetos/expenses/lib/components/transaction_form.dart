@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   const TransactionForm({Key? key, required this.onSubmit}) : super(key: key);
 
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   @override
   State<TransactionForm> createState() => _TransactionFormState();
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
 
-  final valueController = TextEditingController();
+  final _valueController = TextEditingController();
+
+  DateTime _selectedDateTimeonPicker = DateTime.now();
 
   _alertError(_) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text('Operação Cancelada!'),
-              content: const Text('Titulo Vazio, ou Valor R\$ Menor que 0.'),
+              content: const Text(
+                'Titulo Vazio, Valor R\$ Menor que 0. ou Data Inválida!',
+              ),
               actions: <Widget>[
                 // TextButton(
                 //   onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -34,15 +39,36 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   _onSubmit() {
-    final titleParamReturn = titleController.text;
-    final valueParamReturn = double.tryParse(valueController.text) ?? 0.00;
+    final titleParamReturn = _titleController.text;
+    final valueParamReturn = double.tryParse(_valueController.text) ?? 0.00;
+    final datetimeReturn = _selectedDateTimeonPicker;
 
     if (titleParamReturn.isEmpty || valueParamReturn <= 0) {
       _alertError(context); //msg de erro
       return;
     }
 
-    widget.onSubmit(titleParamReturn, valueParamReturn);
+    widget.onSubmit(titleParamReturn, valueParamReturn, datetimeReturn);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+      locale: const Locale('pt', 'BR'),
+    ).then(
+      (pickedDate) {
+        if (pickedDate == null) {
+          return;
+        } else {
+          setState(() {
+            _selectedDateTimeonPicker = pickedDate;
+          });
+        }
+      },
+    );
   }
 
   @override
@@ -54,7 +80,7 @@ class _TransactionFormState extends State<TransactionForm> {
         child: Column(
           children: [
             TextField(
-              controller: titleController,
+              controller: _titleController,
               decoration: const InputDecoration(
                 labelText: 'Titulo',
               ),
@@ -63,10 +89,29 @@ class _TransactionFormState extends State<TransactionForm> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) => _onSubmit,
-              controller: valueController,
+              controller: _valueController,
               decoration: const InputDecoration(labelText: 'Valor R\$'),
             ),
             const SizedBox(height: 6),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(children: [
+                Text(
+                  'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDateTimeonPicker)}',
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                    child: const Text(
+                      'Selecione Uma Data',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: _showDatePicker,
+                  ),
+                )
+              ]),
+            ),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expenses/models/transaction.dart';
 
-enum Menu { itemOne, itemTwo, itemThree, itemFour } //pop menu
-
 class TransactionList extends StatelessWidget {
-  TransactionList({Key? key, required this.transactions}) : super(key: key);
+  TransactionList(
+      {Key? key, required this.transactions, required this.onRemove})
+      : super(key: key);
 
   final List<Transaction> transactions;
 
-  String _popmenuSelectedOption = '';
+  final void Function(String) onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -58,19 +58,11 @@ class TransactionList extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         subtitle: Text(DateFormat('d MMM y').format(tr.date)),
-                        trailing: PopupMenuButton<Menu>(
-                            // Callback that sets the selected popup menu item.
-                            onSelected: (Menu item) {
-                              _popmenuSelectedOption = item.name;
-                            },
-                            itemBuilder: (BuildContext context) =>
-                                <PopupMenuEntry<Menu>>[
-                                  PopupMenuItem<Menu>(
-                                    value: Menu.itemOne,
-                                    child: Text('Excluir'),
-                                    //key: int.parse(tr.id),
-                                  ),
-                                ])),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => onRemove(tr.id),
+                        )),
                   );
                 },
               ));
